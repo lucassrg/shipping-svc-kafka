@@ -1,12 +1,18 @@
 package codes.recursive.messaging;
 
 import codes.recursive.domain.Shipment;
-import io.micronaut.configuration.kafka.annotation.KafkaClient;
-import io.micronaut.configuration.kafka.annotation.KafkaKey;
-import io.micronaut.configuration.kafka.annotation.Topic;
+import io.micronaut.runtime.context.scope.ThreadLocal;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-@KafkaClient
-public interface ShipmentProducer {
-    @Topic("shipping-topic")
-    void sendMessage(@KafkaKey String key, Shipment shipment);
+
+@ThreadLocal
+public class ShipmentProducer {
+
+    private static final Logger LOG = LoggerFactory.getLogger(ShipmentProducer.class);
+    
+    public void sendMessage(String key, Shipment shipment) {
+        LOG.info("Sending message with key {} received!", key);
+        LOG.info("Sending message with shipment {} received!", shipment.getId());
+    }
 }

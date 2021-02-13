@@ -7,11 +7,17 @@ import io.micronaut.configuration.kafka.annotation.KafkaKey;
 import io.micronaut.configuration.kafka.annotation.KafkaListener;
 import io.micronaut.configuration.kafka.annotation.OffsetReset;
 import io.micronaut.configuration.kafka.annotation.Topic;
+import io.micronaut.context.annotation.Property;
 import io.reactivex.Single;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.apache.kafka.clients.consumer.ConsumerConfig;
 
-@KafkaListener(offsetReset = OffsetReset.LATEST)
+@KafkaListener(
+    offsetReset = OffsetReset.LATEST,
+    pollTimeout = "1s",
+    properties = @Property(name = ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, value = "10000")
+    )
 public class OrderConsumer {
     private static final Logger LOG = LoggerFactory.getLogger(OrderConsumer.class);
     private final ShippingService shippingService;

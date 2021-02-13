@@ -6,6 +6,7 @@ import codes.recursive.messaging.ShipmentProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.*;
 
@@ -13,6 +14,7 @@ import java.util.*;
 public class ShippingService {
     private static final Logger LOG = LoggerFactory.getLogger(ShippingService.class);
     
+    @Inject
     private final ShipmentProducer shipmentProducer;
     private final List<Shipment> shipments = Collections.synchronizedList(new ArrayList<>());
 
